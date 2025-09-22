@@ -8,6 +8,7 @@ public class H2DatabaseExample {
         System.out.println("Connected");
         createTable(connection);
         insertTable(connection);
+        selectTable(connection);
         connection.close();
     } catch (ClassNotFoundException e) {
             System.err.println("H2 Driver not found.Please add Jar");
@@ -41,6 +42,25 @@ public class H2DatabaseExample {
        }catch (SQLException e){
             System.out.println("Cant able to insert into table"+e.getMessage());
         }
+        }
+        public static void selectTable(Connection connection){
+        try(Statement statement = connection.createStatement()){
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+            System.out.println("id|name|email|age");
+            while(result.next()){
+                int id =result.getInt("id");
+                String name = result.getString("name");
+                String email = result.getString("email");
+                int age = result.getInt("age");
+                System.out.println(id + "|"+name+"|"+email);
+            }
+
+
+
+        }catch (SQLException e){
+            System.out.println("Rows re not selected"+e.getMessage());
+        }
+
         }
         }
 
